@@ -1,5 +1,7 @@
 package com.example.iftaproject;
 
+import static java.lang.Character.isDigit;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -48,9 +50,6 @@ public class SecondFragment extends Fragment {
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-        //TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
-
-
         binding = FragmentSecondBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
@@ -64,7 +63,6 @@ public class SecondFragment extends Fragment {
                     Manifest.permission.CAMERA
             },
                     100);
-
         }
 
         binding.ReceiptButton.setOnClickListener(new View.OnClickListener() {
@@ -77,8 +75,6 @@ public class SecondFragment extends Fragment {
         binding.Tphoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 100); //Check
 
             }
         });
@@ -90,6 +86,7 @@ public class SecondFragment extends Fragment {
                 _extractTextFromUri(uri); // Uses method defined below to extract data using the ML KIT.
             }
         });
+
 
         binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,15 +106,8 @@ public class SecondFragment extends Fragment {
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(requestCode == 100){
-            Bitmap captureImage = (Bitmap) data.getExtras().get("data");
-            binding.imageViewReceipt.setImageBitmap(captureImage);
-            //binding.imageViewReceipt.setImageURI(data.getData());
-            //uriString = data.getData().toString();
-        }
-    }
+
+
 
     public void _extractTextFromUri(Uri _uri){
         try{
@@ -128,12 +118,21 @@ public class SecondFragment extends Fragment {
                             .addOnSuccessListener(new OnSuccessListener<Text>() {
                                 @Override
                                 public void onSuccess(Text visionText) {
-                                    binding.textViewTextResults.setText(visionText.getText());
+                                    // Below gets the segment of the string that has the gallons data and takes the about of gallons //
+                                    String data = visionText.getText();
+
+                                    int position = data.indexOf("Gallons:")+8; // May need to add extra code just incase the receipt says "gal:" instead of "gallons:" //
+                                    String gallons = ""+data.charAt(position)+data.charAt(position+1)+data.charAt(position+2)+data.charAt(position+3)+data.charAt(position+4)+data.charAt(position+5)+data.charAt(position+6)+data.charAt(position+7);
+                                    String totalGallons = gallons.replaceAll("[a-zA-Z]", "");
+
+                                    binding.textViewTextResults.setText(totalGallons);
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
+
+                                            binding.textViewTextResults.setText("Not Found");
 
                                         }
                                     });
