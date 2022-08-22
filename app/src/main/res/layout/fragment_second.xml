@@ -22,7 +22,7 @@
         android:id="@+id/ReceiptButton"
         android:layout_width="111dp"
         android:layout_height="58dp"
-        android:text="Rphoto"
+        android:text="Choose Existing Photo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.091"
@@ -31,10 +31,10 @@
         app:layout_constraintVertical_bias="0.896" />
 
     <Button
-        android:id="@+id/Dphoto"
+        android:id="@+id/Tphoto"
         android:layout_width="111dp"
         android:layout_height="57dp"
-        android:text="Dphoto"
+        android:text="TakeNewPhoto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.091"
@@ -89,4 +89,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.897" />
+
+    <TextView
+        android:id="@+id/textViewTextResults"
+        android:layout_width="279dp"
+        android:layout_height="93dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.376" />
 </androidx.constraintlayout.widget.ConstraintLayout>
