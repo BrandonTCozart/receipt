@@ -72,13 +72,6 @@ public class SecondFragment extends Fragment {
             }
         });
 
-        binding.Tphoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         binding.buttonExtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,12 +114,22 @@ public class SecondFragment extends Fragment {
                                     // Below gets the segment of the string that has the gallons data and takes the about of gallons //
                                     String data = visionText.getText();
 
+                                    String stateData = visionText.getText().substring(0, 70);
+                                    String[] statesAb = {"AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MP", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UM", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"};
+                                    int positionState = stateData.indexOf(",");;
+                                    String state = ""+stateData.charAt(positionState+1)+stateData.charAt(positionState+2)+stateData.charAt(positionState+3);
+
                                     int position = data.indexOf("Gallons:")+8; // May need to add extra code just incase the receipt says "gal:" instead of "gallons:" //
                                     String gallons = ""+data.charAt(position)+data.charAt(position+1)+data.charAt(position+2)+data.charAt(position+3)+data.charAt(position+4)+data.charAt(position+5)+data.charAt(position+6)+data.charAt(position+7);
                                     String totalGallons = gallons.replaceAll("[a-zA-Z]", "");
 
+
+                                    binding.editTextTextPersonName3.setText(totalGallons);
+                                    binding.textViewState.setText(state);
                                     binding.textViewTextResults.setText(totalGallons);
+
                                 }
+
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                         @Override
