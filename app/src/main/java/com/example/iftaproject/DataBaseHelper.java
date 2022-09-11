@@ -36,15 +36,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     }
 
-    public boolean addOne(receipt receipt){
+    public boolean addOne(receipt receipt1){
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(RECEIPT_TYPE, receipt.getType());
-        cv.put(RECEIPT_TOTAL, receipt.getTotal());
-        cv.put(RECEIPT_DATE, receipt.getDate());
-        cv.put(RECEIPT_IMAGEURI, receipt.getImageuri());
+        cv.put(RECEIPT_TYPE, receipt1.getType());
+        cv.put(RECEIPT_TOTAL, receipt1.getTotal());
+        cv.put(RECEIPT_DATE, receipt1.getDate());
+        cv.put(RECEIPT_IMAGEURI, receipt1.getImageuri());
 
         long insert = db.insert(RECEIPT_TABLE, null, cv);
 

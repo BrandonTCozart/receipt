@@ -36,6 +36,7 @@ import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 
 import java.io.IOException;
+import java.util.List;
 
 public class SecondFragment extends Fragment {
 
@@ -44,6 +45,9 @@ public class SecondFragment extends Fragment {
     String uriString = "";
     receipt receipt1;
     TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
+
+    List<receipt> allNotes;
+    DataBaseHelper dataBaseHelper;
 
 
 
@@ -59,6 +63,9 @@ public class SecondFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        dataBaseHelper = new DataBaseHelper(getContext());
+        allNotes = dataBaseHelper.getAllNotesFromLocalDB();
 
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(getActivity(), new String[]{
@@ -94,6 +101,21 @@ public class SecondFragment extends Fragment {
         binding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(binding.editTextType.getText().toString() == ""){
+
+                    Toast.makeText(getContext(), "Scan Receipt", Toast.LENGTH_SHORT).show();
+
+                }else{
+
+
+                    receipt1 = new receipt("Restaurant", "total", "date", uriString);
+                    dataBaseHelper.addOne(receipt1);
+                }
+
+                binding.editTextType.setText("");
+
+
 
             }
         });

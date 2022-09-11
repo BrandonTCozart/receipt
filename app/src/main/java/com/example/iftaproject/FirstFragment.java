@@ -11,6 +11,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.iftaproject.databinding.FragmentFirstBinding;
 
+import java.util.List;
+
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
@@ -28,6 +30,13 @@ public class FirstFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext());
+        List<receipt> notes;
+
+
+        notes = dataBaseHelper.getAllNotesFromLocalDB();
+        binding.textViewTotalReceipts.setText("" + notes.size());
 
         binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
             @Override
