@@ -25,22 +25,10 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
 
-        <action
-            android:id="@+id/action_SecondFragment_to_currentQuarterFragment"
-            app:destination="@id/currentQuarter" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/currentQuarter"
-        android:name="com.example.iftaproject.currentQuarter"
-        android:label="fragment_current_quarter"
-        tools:layout="@layout/fragment_current_quarter">
-
-        <action
-            android:id="@+id/action_currentQuarterFragment_to_secondFragment"
-            app:destination="@id/SecondFragment" />
 
     </fragment>
+
+
 
 
 

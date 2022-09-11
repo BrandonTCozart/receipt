@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -41,6 +42,7 @@ public class SecondFragment extends Fragment {
     private FragmentSecondBinding binding;
 
     String uriString = "";
+    receipt receipt1;
     TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
 
 
@@ -89,13 +91,14 @@ public class SecondFragment extends Fragment {
             }
         });
 
-        binding.buttonCurrentQuarter.setOnClickListener(new View.OnClickListener() {
+        binding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_currentQuarterFragment);
+
             }
         });
+
+
 
     }
 
@@ -114,19 +117,40 @@ public class SecondFragment extends Fragment {
                                     // Below gets the segment of the string that has the gallons data and takes the about of gallons //
                                     String data = visionText.getText();
 
-                                    String stateData = visionText.getText().substring(0, 70);
-                                    String[] statesAb = {"AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MP", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UM", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"};
-                                    int positionState = stateData.indexOf(",");;
-                                    String state = ""+stateData.charAt(positionState+1)+stateData.charAt(positionState+2)+stateData.charAt(positionState+3);
+                                    //String stateData = visionText.getText().substring(0, 70);
+                                    //String[] statesAb = {"AK", "AL", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN", "MO", "MP", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UM", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY"};
+                                    //int positionState = stateData.indexOf(",");;
+                                    //String state = ""+stateData.charAt(positionState+1)+stateData.charAt(positionState+2)+stateData.charAt(positionState+3);
 
-                                    int position = data.indexOf("Gallons:")+8; // May need to add extra code just incase the receipt says "gal:" instead of "gallons:" //
-                                    String gallons = ""+data.charAt(position)+data.charAt(position+1)+data.charAt(position+2)+data.charAt(position+3)+data.charAt(position+4)+data.charAt(position+5)+data.charAt(position+6)+data.charAt(position+7);
-                                    String totalGallons = gallons.replaceAll("[a-zA-Z]", "");
+                                    //int position = data.indexOf("Gallons:")+8; // May need to add extra code just incase the receipt says "gal:" instead of "gallons:" //
+                                    //String gallons = ""+data.charAt(position)+data.charAt(position+1)+data.charAt(position+2)+data.charAt(position+3)+data.charAt(position+4)+data.charAt(position+5)+data.charAt(position+6)+data.charAt(position+7);
+                                    //String totalGallons = gallons.replaceAll("[a-zA-Z]", "");
 
 
-                                    binding.editTextTextPersonName3.setText(totalGallons);
-                                    binding.textViewState.setText(state);
-                                    binding.textViewTextResults.setText(totalGallons);
+                                    //binding.editTextTextPersonName3.setText(totalGallons);
+                                    //binding.textViewState.setText(state);
+                                    //binding.textViewTextResults.setText(totalGallons);
+
+                                    if(data.contains("gas") || data.contains("Gas")|| data.contains("GAS")){
+                                        receipt1 = new receipt("Gas", "total", "date", uriString);
+                                        binding.editTextType.setText(receipt1.getType());
+                                    }
+
+                                    if(data.contains("dine-in") || data.contains("order")|| data.contains("table")){
+                                        receipt1 = new receipt("Restaurant", "total", "date", uriString);
+                                        binding.editTextType.setText(receipt1.getType());
+                                    }
+
+                                    if(data.contains("Walmart") || data.contains("Target")|| data.contains("FoodLion")){
+                                        receipt1 = new receipt("grocery", "total", "date", uriString);
+                                        binding.editTextType.setText(receipt1.getType());
+                                    }
+
+
+
+
+
+                                    Toast.makeText(getContext(), "Extracted", Toast.LENGTH_SHORT).show();
 
                                 }
 
@@ -135,8 +159,8 @@ public class SecondFragment extends Fragment {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
 
-                                            binding.textViewTextResults.setText("Not Found");
 
+                                            Toast.makeText(getContext(), "Extraction Failed", Toast.LENGTH_SHORT).show();
                                         }
                                     });
         } catch (IOException e){
