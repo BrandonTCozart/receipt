@@ -15,8 +15,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String RECEIPT_TABLE = "RECEIPT_TABLE";
 
-    public static final String RECEIPT_TYPE = "RECEIPT_TYPE";
-    public static final String RECEIPT_TOTAL = "RECEIPT_TOTAL";
+    public static final String RECEIPT_DATA = "RECEIPT_DATA";
     public static final String RECEIPT_DATE = "RECEIPT_DATE";
     public static final String RECEIPT_IMAGEURI = "RECEIPT_IMAGEURI";
 
@@ -27,7 +26,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + RECEIPT_TABLE + " (" + RECEIPT_TYPE + " TEXT, " + RECEIPT_TOTAL + " TEXT, " + RECEIPT_DATE + " TEXT, " + RECEIPT_IMAGEURI + " TEXT) ";
+        String createTableStatement = "CREATE TABLE " + RECEIPT_TABLE + " (" + RECEIPT_DATA + " TEXT, " + " TEXT, " + RECEIPT_DATE + " TEXT, " + RECEIPT_IMAGEURI + " TEXT) ";
 
         db.execSQL(createTableStatement);
     }
@@ -41,8 +40,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(RECEIPT_TYPE, receipt1.getType());
-        cv.put(RECEIPT_TOTAL, receipt1.getTotal());
+        cv.put(RECEIPT_DATA, receipt1.getData());
         cv.put(RECEIPT_DATE, receipt1.getDate());
         cv.put(RECEIPT_IMAGEURI, receipt1.getImageuri());
 
@@ -68,12 +66,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                String receiptType = cursor.getString(0);
+                String receiptData = cursor.getString(0);
                 String receiptTotal = cursor.getString(1);
                 String receiptDate = cursor.getString(2);
                 String receiptImageuri = cursor.getString(3);
 
-                receipt newReceipt = new receipt(""+receiptType, ""+receiptTotal, ""+receiptDate, ""+receiptImageuri);
+                receipt newReceipt = new receipt(""+receiptData, ""+receiptDate, ""+receiptImageuri);
 
                 returnList.add(newReceipt);
             } while (cursor.moveToNext());
@@ -93,11 +91,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void changeNoteInfo(String receiptType, String receiptTotal, String receiptDate){
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "UPDATE " + RECEIPT_TABLE + " SET " + RECEIPT_TYPE + " = '" + receiptType +"' WHERE "
-                + RECEIPT_TYPE + " = '" + receiptDate + "'" ;
+        String query = "UPDATE " + RECEIPT_TABLE + " SET " + RECEIPT_DATA + " = '" + receiptType +"' WHERE "
+                + RECEIPT_DATA + " = '" + receiptDate + "'" ;
 
-        String query2 = "UPDATE " + RECEIPT_TABLE + " SET " + RECEIPT_TOTAL + " = '" + receiptTotal + "' WHERE "
-                + RECEIPT_TYPE + " = '" + receiptDate + "'";
+        String query2 = "UPDATE " + RECEIPT_TABLE + " SET " + " = '" + receiptTotal + "' WHERE "
+                + RECEIPT_DATA + " = '" + receiptDate + "'";
 
         db.execSQL(query2);
         db.execSQL(query);
@@ -107,7 +105,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public ArrayList<String> getTitles(){
         ArrayList<String> titles = new ArrayList();
 
-        String queryString = "SELECT " + RECEIPT_TYPE + " FROM " + RECEIPT_TABLE;
+        String queryString = "SELECT " + RECEIPT_DATA + " FROM " + RECEIPT_TABLE;
 
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -136,7 +134,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        db.delete(RECEIPT_TABLE, RECEIPT_TYPE + "= '" + noteTitle + "'", null );
+        db.delete(RECEIPT_TABLE, RECEIPT_DATA + "= '" + noteTitle + "'", null );
 
 
     }

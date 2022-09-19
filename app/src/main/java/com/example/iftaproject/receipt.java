@@ -1,32 +1,22 @@
 package com.example.iftaproject;
 
 public class receipt {
-    String type;
-    String total;
+    String data;
     String date;
     String imageuri;
 
-    public receipt(String type, String total, String date, String imageuri) {
-        this.type = type;
-        this.total = total;
+    public receipt(String data, String date, String imageuri) {
+        this.data = data;
         this.date = date;
         this.imageuri = imageuri;
     }
 
-    public String getType() {
-        return type;
+    public String getData() {
+        return data;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getTotal() {
-        return total;
-    }
-
-    public void setTotal(String total) {
-        this.total = total;
+    public void setData(String data) {
+        this.data = data;
     }
 
     public String getDate() {

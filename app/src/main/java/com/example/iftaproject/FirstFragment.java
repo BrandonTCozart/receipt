@@ -36,7 +36,7 @@ public class FirstFragment extends Fragment {
 
 
         notes = dataBaseHelper.getAllNotesFromLocalDB();
-        binding.textViewTotalReceipts.setText("" + notes.size());
+        binding.textViewTotalReceipts.setText("Total receipts scanned: " + notes.size());
 
         binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
             @Override

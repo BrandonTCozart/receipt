@@ -109,7 +109,7 @@ public class SecondFragment extends Fragment {
                 }else{
 
 
-                    receipt1 = new receipt("Restaurant", "total", "date", uriString);
+                    receipt1 = new receipt("Restaurant", "total", uriString);
                     dataBaseHelper.addOne(receipt1);
                 }
 
@@ -153,6 +153,7 @@ public class SecondFragment extends Fragment {
                                     //binding.textViewState.setText(state);
                                     //binding.textViewTextResults.setText(totalGallons);
 
+                                    /*
                                     if(data.contains("gas") || data.contains("Gas")|| data.contains("GAS")){
                                         receipt1 = new receipt("Gas", "total", "date", uriString);
                                         binding.editTextType.setText(receipt1.getType());
@@ -167,6 +168,10 @@ public class SecondFragment extends Fragment {
                                         receipt1 = new receipt("grocery", "total", "date", uriString);
                                         binding.editTextType.setText(receipt1.getType());
                                     }
+
+                                     */
+
+                                    binding.editTextType.setText(data);
 
 
 
